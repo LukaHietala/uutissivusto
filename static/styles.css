@@ -2,15 +2,29 @@
     font-family: sans-serif;
 }
 
+:root {
+    --default-text: light-dark(black, white);
+    --background: light-dark(#f8f8f8, rgb(20, 20, 20));
+    --card: light-dark(white, rgb(52, 52, 52));
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
 body {
     max-width: 500px;
     padding: 20px;
     margin: auto;
-    background-color: #f8f8f8;
+    background-color: var(--background);
 }
 
 a {
-    color: black;
+    color: var(--default-text);
     text-decoration: none;
 }
 
@@ -23,7 +37,7 @@ a {
 .uutis-kortti {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--card);
     transition: 0.2s;
 }
 
