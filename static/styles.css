@@ -1,0 +1,30 @@
+* {
+    font-family: sans-serif;
+}
+
+body {
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
+    background-color: #f8f8f8;
+}
+
+.uutis-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.uutis-kortti {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.uutis-kuva {
+    object-fit: cover; 
+}
+
+.uutis-tiedot {
+    padding: 10px;
+}
