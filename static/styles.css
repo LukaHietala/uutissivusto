@@ -17,15 +17,23 @@
 }
 
 body {
-    max-width: 500px;
-    padding: 20px;
-    margin: auto;
     background-color: var(--background);
+    margin: 0;
+}
+
+main {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
 }
 
 a {
     color: var(--default-text);
     text-decoration: none;
+}
+
+nav {
+    height: fit-content;
 }
 
 .uutis-lista {
@@ -38,7 +46,7 @@ a {
     display: flex;
     flex-direction: column;
     background-color: var(--card);
-    transition: 0.2s;
+    transition: box-shadow 0.2s;
 }
 
 .uutis-kortti:hover {
@@ -51,4 +59,15 @@ a {
 
 .uutis-tiedot {
     padding: 10px 20px;
+}
+
+header {
+    background-color: var(--card);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 200px;
+    font-size: 0.9em;
+    align-items: center;
 }

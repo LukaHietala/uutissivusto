@@ -7,8 +7,25 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <button data-set-theme="light">Light Mode</button>
-    <button data-set-theme="dark" >Dark Mode</button>
+    <header>
+        <nav style="display: flex; gap: 15px;">
+            <a href="#">
+                Uutiset
+            </a>
+            <a href="#">
+                Mielipidekirjoitukset
+            </a>
+            <a href="#">
+                Pentulive
+            </a>
+            <a href="#">
+                Sanajuuri
+            </a>
+        </nav>
+        <nav id="theme-nav">
+            <button id="theme-button">Light Mode</button>
+        </nav>
+    </header>
     <main class="uutis-lista">
         <a href="#">
             <article class="uutis-kortti">
