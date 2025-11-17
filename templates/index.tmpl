@@ -1,3 +1,5 @@
 <html>
-  <img src="{{ .kuva}}" />
+  	{{range .Articles}}
+		{{ .Otsikko }}<br />
+	{{end}}
 </html>

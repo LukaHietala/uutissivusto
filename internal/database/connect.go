@@ -7,11 +7,10 @@ import (
 )
 
 func Connect() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:@/tyoharjoittelu")
+	db, err := sql.Open("mysql", "root:@/uutissivusto")
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
