@@ -2,11 +2,18 @@ package main
 
 import (
 	"net/http"
+	"uutissivusto/internal/database"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	_, err := database.Connect()
+
+	if err != nil {
+		panic(err.Error())
+	}
+
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/kisu", func(c *gin.Context) {
