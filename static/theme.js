@@ -7,6 +7,9 @@ const setTheme = (theme) => {
 
   if (theme === 'dark') {
     html.setAttribute('data-theme', 'dark');
+    themeButton.innerHTML = "<img src='/static/aurinko.svg' class='light' />"
+  } else {
+    themeButton.innerHTML = "<img src='/static/kuu.svg' class='dark' />"
   }
 
   localStorage.setItem('theme', theme);

@@ -71,3 +71,15 @@ header {
     font-size: 0.9em;
     align-items: center;
 }
+
+.theme-button {
+    border: none;
+    background: none;
+}
+
+.theme-button .dark- {
+    filter: invert(0);
+}
+.theme-button .light {
+    filter: invert(1);
+}
