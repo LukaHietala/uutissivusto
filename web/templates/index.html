@@ -1,13 +1,32 @@
 {{ define "index.html" }}
-<html>
-	<head>
-		<link rel="stylesheet" href="/static/styles.css">
-	</head>
-  	{{range .Articles}}
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Uutissivusto</title>
+	<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+	<header>
+        <nav style="display: flex; gap: 15px;">
+            <a href="/">
+                Uutiset
+            </a>
+            {{ range .Categories}}
+				<a href="{{ .Name }}">{{ .Name }}</a>
+			{{ end }}
+            <a href="/">
+                Sanajuuri
+            </a>
+        </nav>
+        <nav id="theme-nav">
+            <button id="theme-button" class="theme-button">
+            </button>
+        </nav>
+    </header>
+	{{range .Articles}}
 		{{ .}}<br />
 	{{end}}
-	{{range .Categories}}
-		{{ .Name }}<br />
-	{{end}}
+</body>
 </html>
 {{ end }}

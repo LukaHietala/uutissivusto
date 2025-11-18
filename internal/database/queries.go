@@ -7,11 +7,11 @@ import (
 )
 
 type Article struct {
-	Id       int
-	Title    string
-	Content  string
-	Picture  string
-	Category string
+	Id         int
+	Title      string
+	Content    string
+	Picture    string
+	CategoryId string
 }
 
 type Category struct {
@@ -20,7 +20,7 @@ type Category struct {
 }
 
 func GetArticles(db *sql.DB) ([]Article, error) {
-	rows, err := db.Query("SELECT article_id, article_title, article_content, article_picture, category_name FROM articles INNER JOIN categories ON articles.category_id = categories.category_id;")
+	rows, err := db.Query("SELECT * FROM articles")
 	if err != nil {
 		return nil, err
 	}
@@ -28,8 +28,12 @@ func GetArticles(db *sql.DB) ([]Article, error) {
 
 	for rows.Next() {
 		article := Article{}
-		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Category); err != nil {
+		var category_id sql.NullString
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &category_id); err != nil {
 			return nil, err
+		}
+		if category_id.Valid {
+			article.CategoryId = category_id.String
 		}
 		articles = append(articles, article)
 	}
@@ -56,7 +60,7 @@ func GetCategories(db *sql.DB) ([]Category, error) {
 }
 
 func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
-	stmtOut, err := db.Prepare("SELECT article_id, article_title, article_content, article_picture, category_name FROM articles INNER JOIN categories ON articles.category_id = categories.category_id WHERE category_name = ?;")
+	stmtOut, err := db.Prepare("SELECT article_id, article_title, article_content, article_picture FROM articles INNER JOIN categories ON articles.category_id = categories.category_id WHERE category_name = ?;")
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +74,7 @@ func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
 
 	for rows.Next() {
 		article := Article{}
-		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Category); err != nil {
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture); err != nil {
 			return nil, err
 		}
 		articles = append(articles, article)
