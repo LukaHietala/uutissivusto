@@ -4,11 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Uutissivusto</title>
+	<script src="/static/theme.js"></script>
 	<link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 	<header>
-        <nav style="display: flex; gap: 15px;">
+        <nav style="display: flex; gap: 20px;">
             <a href="/">
                 Uutiset
             </a>
@@ -20,13 +21,27 @@
             </a>
         </nav>
         <nav id="theme-nav">
-            <button id="theme-button" class="theme-button">
+            <button id="theme-button" class="theme-button">mirri
             </button>
         </nav>
     </header>
-	{{range .Articles}}
-		{{ .}}<br />
-	{{end}}
+	<main class="uutis-lista">
+			{{range .Articles}}
+			<a href="{{.Title}}">
+				<article class="uutis-kortti">
+					<img src="{{.Picture}}" class="uutis-kuva">
+					<div class="uutis-tiedot">
+						<h2>
+							{{ .Title }}
+						</h2>
+						<p>
+							{{.Description}}
+						</p>
+					</div>
+				</article>
+			</a>
+			{{end}}
+		</main>
 </body>
 </html>
 {{ end }}
