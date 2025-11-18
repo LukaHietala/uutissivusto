@@ -15,7 +15,8 @@ func main() {
 	defer db.Close()
 
 	router := gin.Default()
-	router.LoadHTMLGlob("templates/*")
+	router.Static("/static", "web/static/")
+	router.LoadHTMLGlob("web/templates/*")
 
 	router.GET("/", func(c *gin.Context) {
 		articles, err := database.GetArticles(db)
@@ -31,7 +32,7 @@ func main() {
 			return
 		}
 
-		c.HTML(200, "index.tmpl", gin.H{
+		c.HTML(200, "index.html", gin.H{
 			"Articles":   articles,
 			"Categories": categories,
 		})
@@ -46,8 +47,16 @@ func main() {
 			return
 		}
 
-		c.HTML(200, "category.tmpl", gin.H{
-			"Articles": articles,
+		categories, err := database.GetCategories(db)
+
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.HTML(200, "index.html", gin.H{
+			"Articles":   articles,
+			"Categories": categories,
 		})
 	})
 

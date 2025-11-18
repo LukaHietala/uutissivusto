@@ -1,0 +1,13 @@
+{{ define "index.html" }}
+<html>
+	<head>
+		<link rel="stylesheet" href="/static/styles.css">
+	</head>
+  	{{range .Articles}}
+		{{ .}}<br />
+	{{end}}
+	{{range .Categories}}
+		{{ .Name }}<br />
+	{{end}}
+</html>
+{{ end }}
