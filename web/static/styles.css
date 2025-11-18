@@ -39,7 +39,7 @@ nav {
 .uutis-lista {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:  repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows: 1fr;
 }
 
@@ -58,7 +58,8 @@ nav {
 .uutis-kuva {
     object-fit: cover; 
     aspect-ratio: 16/9;
-    width: 495px;
+    width: 100%;
+    height: 100%;
 }
 
 .uutis-tiedot {

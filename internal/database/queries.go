@@ -13,6 +13,7 @@ type Article struct {
 	Picture     string
 	CategoryId  string
 	Description string
+	URI         string
 }
 
 type Category struct {
@@ -30,7 +31,7 @@ func GetArticles(db *sql.DB) ([]Article, error) {
 	for rows.Next() {
 		article := Article{}
 		var category_id sql.NullString
-		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &category_id, &article.Description); err != nil {
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &category_id, &article.Description, &article.URI); err != nil {
 			return nil, err
 		}
 		if category_id.Valid {
@@ -61,7 +62,7 @@ func GetCategories(db *sql.DB) ([]Category, error) {
 }
 
 func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
-	stmtOut, err := db.Prepare("SELECT article_id, article_title, article_content, article_picture, article_description FROM articles INNER JOIN categories ON articles.category_id = categories.category_id WHERE category_name = ?;")
+	stmtOut, err := db.Prepare("SELECT article_id, article_title, article_content, article_picture, article_description, article_uri FROM articles INNER JOIN categories ON articles.category_id = categories.category_id WHERE category_name = ?;")
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +76,7 @@ func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
 
 	for rows.Next() {
 		article := Article{}
-		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Description); err != nil {
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Description, &article.URI); err != nil {
 			return nil, err
 		}
 		articles = append(articles, article)
