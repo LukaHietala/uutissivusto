@@ -7,15 +7,20 @@ import (
 )
 
 type Article struct {
-	Id        int
-	Otsikko   string
-	Teksti    string
-	Kuva      string
-	Kategoria string
+	Id       int
+	Title    string
+	Content  string
+	Picture  string
+	Category string
+}
+
+type Category struct {
+	Id   int
+	Name string
 }
 
 func GetArticles(db *sql.DB) ([]Article, error) {
-	rows, err := db.Query("SELECT * FROM uutinen")
+	rows, err := db.Query("SELECT article_id, article_title, article_content, article_picture, category_name FROM articles INNER JOIN categories ON articles.category_id = categories.category_id;")
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +28,49 @@ func GetArticles(db *sql.DB) ([]Article, error) {
 
 	for rows.Next() {
 		article := Article{}
-		if err := rows.Scan(&article.Id, &article.Otsikko, &article.Teksti, &article.Kuva, &article.Kategoria); err != nil {
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Category); err != nil {
+			return nil, err
+		}
+		articles = append(articles, article)
+	}
+
+	return articles, nil
+}
+
+func GetCategories(db *sql.DB) ([]Category, error) {
+	rows, err := db.Query("SELECT * FROM categories")
+	if err != nil {
+		return nil, err
+	}
+	categories := []Category{}
+
+	for rows.Next() {
+		category := Category{}
+		if err := rows.Scan(&category.Id, &category.Name); err != nil {
+			return nil, err
+		}
+		categories = append(categories, category)
+	}
+
+	return categories, nil
+}
+
+func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
+	stmtOut, err := db.Prepare("SELECT article_id, article_title, article_content, article_picture, category_name FROM articles INNER JOIN categories ON articles.category_id = categories.category_id WHERE category_name = ?;")
+	if err != nil {
+		return nil, err
+	}
+	defer stmtOut.Close()
+
+	rows, err := stmtOut.Query(category)
+	if err != nil {
+		return nil, err
+	}
+	articles := []Article{}
+
+	for rows.Next() {
+		article := Article{}
+		if err := rows.Scan(&article.Id, &article.Title, &article.Content, &article.Picture, &article.Category); err != nil {
 			return nil, err
 		}
 		articles = append(articles, article)
