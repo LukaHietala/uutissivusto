@@ -1,9 +1,9 @@
-{{ define "index.html" }}
+{{ define "article.html" }}
 <html lang="fi">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Uutissivusto</title>
+	<title>{{.Article.Title}}</title>
 	<script src="/static/theme.js"></script>
 	<link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -25,23 +25,22 @@
             </button>
         </nav>
     </header>
-	<main class="uutis-lista">
-			{{range .Articles}}
-			<a href="/artikkeli/{{.URI}}">
-				<article class="uutis-kortti">
-					<img src="{{.Picture}}" class="uutis-kuva">
-					<div class="uutis-tiedot">
-						<h2>
-							{{ .Title }}
-						</h2>
-						<p>
-							{{.Description}}
-						</p>
-					</div>
-				</article>
-			</a>
-			{{end}}
-		</main>
+	<main class="article-container" style="max-width: 800px;">
+        <article>
+            <img src="{{.Article.Picture}}" class="uutis-kuva">
+            <div>
+                <h2>
+                    {{ .Article.Title }}
+                </h2>
+                <p>
+                    {{ .Article.Description}}
+                </p>
+            </div>
+            <p>
+                {{ .Article.Content }}
+            </p>
+        </article>
+	</main>
 </body>
 </html>
 {{ end }}

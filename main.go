@@ -60,6 +60,29 @@ func main() {
 		})
 	})
 
+	router.GET("/artikkeli/:uri", func(c *gin.Context) {
+		articleUri := c.Param("uri")
+		article, err := database.GetArticle(db, articleUri)
+
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		categories, err := database.GetCategories(db)
+
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.HTML(200, "article.html", gin.H{
+			"Article":    article,
+			"Categories": categories,
+		})
+
+	})
+
 	router.Run()
 
 }
