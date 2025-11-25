@@ -108,9 +108,19 @@ func GetCategoryArticles(db *sql.DB, category string) ([]Article, error) {
 	return articles, nil
 }
 
-func AddArticle(db *sql.DB, title string, content string, picture string, description string, uri string) error {
+// go doesn't have optional types >:(
+func NewNullString(s string) sql.NullString {
+	if len(s) == 0 {
+		return sql.NullString{}
+	}
+	return sql.NullString{
+		String: s,
+		Valid:  true,
+	}
+}
+
+func AddArticle(db *sql.DB, title string, content string, picture string, description string, uri string, category_id string) error {
 	newArticle := Article{
-		Id:          0,
 		Title:       title,
 		Content:     content,
 		Picture:     picture,
@@ -118,7 +128,7 @@ func AddArticle(db *sql.DB, title string, content string, picture string, descri
 		URI:         uri,
 	}
 
-	_, err := db.Exec("INSERT INTO articles (article_title, article_content, article_picture, article_description, article_uri) VALUES ($1, $2, $3, $4, $5)", newArticle.Title, newArticle.Content, newArticle.Picture, newArticle.Description, newArticle.URI)
+	_, err := db.Exec("INSERT INTO articles (`article_title`, `article_content`, `article_picture`, `article_description`, `article_uri`, `category_id`) VALUES (?, ?, ?, ?, ?, ?)", newArticle.Title, newArticle.Content, newArticle.Picture, newArticle.Description, newArticle.URI, NewNullString(category_id))
 	if err != nil {
 		return err
 	}

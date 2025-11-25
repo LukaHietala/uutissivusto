@@ -1,0 +1,27 @@
+<html>
+    <form action="" method="post">
+        <label for="title">Otsikko</label>
+        <input type="text" name="title" id="title" required>
+        <label for="content">Teksti</label>
+        <textarea name="content" id="content" required></textarea>
+        <label for="picture">Kuva</label>
+        <input type="text" name="picture" id="picture" required>
+        <label for="description">Kuvaus</label>
+        <textarea name="description" id="description" required></textarea>
+        <label for="uri">Osoite</label>
+        <input type="text" name="uri" id="uri" required>
+        <label for="categories"></label>
+        <select name="categories" id="categories">
+            <option value="">Valitse kategoria</option>
+            {{range .Categories}}
+                <option value="{{.Id}}">
+                    {{.Name}}
+                </option>
+            {{end}}
+        </select>
+        <button type="submit">Luo</button>
+    </form>
+    {{if .Error}}
+    {{.Error}}
+    {{end}}
+</html>
